@@ -31,8 +31,6 @@ function EditTarefa() {
             type='text'
         />
     </form>
-        
-
  </>
   )
 }

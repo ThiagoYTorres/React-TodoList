@@ -6,25 +6,42 @@ function ListaTarefa() {
 
     const [tarefas, setTarefas] = React.useState([])
 
+    const [edit, setEdit] = React.useState(false)
+
+    console.log(tarefas)
+
     function gerarTarefa(formData){
-        
         const tarefa = formData.get('tarefa')
         if (tarefa == ''){
             alert('[ATENÇÃO] input vazio adicione uma tarefa')
         }
         else{
-        setTarefas( prevTarefas => [...prevTarefas,tarefa])
-        console.log(tarefas)
+            setTarefas( prevTarefas => ([...prevTarefas,
+                {
+                    texto: tarefa, 
+                    id: prevTarefas.length + 1,
+                    isEditing: edit
+                
+                }])
+            )
+            console.log(tarefas)
         }
     }
+    
+    
+
     const lista = tarefas.map((el,index) => (
         <Tarefa 
-            tarefa={el} 
+            tarefa={el.texto} 
+            tarefas={tarefas}
             key={index} 
+            edit={el.isEditing}
             deletarTarefa={ () => delTarefa(index)}
             editarTarefa={() => editTarefa(index)}
+            cancelEdit={() => cancelEdit(index)}
         />
         ))
+
     // Quando clicar em editar quero que apareça um input
     // Defina o valor daquela tarefa como o valor do input
     function delTarefa(index) {
@@ -32,13 +49,24 @@ function ListaTarefa() {
     }
 
     function editTarefa(index){
-        setTarefas(prevTarefas => prevTarefas.map(el => el = <EditTarefa/>))
+        setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? ({...e,isEditing:!e.isEditing}) : 
+        e
+    ))
+        
     }
-
+    function cancelEdit(index){
+         setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? ({...e,isEditing:!e.isEditing}) : 
+        e
+    ))
+    }
+    
   return (
     <>
     <main>
-        <h1>To Do List</h1>
+        <header className='header'>
+            <h1>To Do List</h1>
+            <p>Escreva uma tarefa e clique em ADD para adiciona-la na lista</p>
+        </header>
     <form className='gerarT' action={gerarTarefa}>
         <input 
             name='tarefa' 
