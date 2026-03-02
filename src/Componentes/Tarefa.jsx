@@ -5,25 +5,34 @@ import editIcon from '../imgs/edit.svg'
 function Tarefa(prop) {
   
   const [done,setDone] = React.useState(false)
-  const [texto, setTexto] = React.useState(prop.tarefa)
+
+  function confirmarEdit(event){
+    
+      event.preventDefault()
+      console.log(event.target)
+      const formData = new FormData(event.target);
+      const novaTarefa = formData.get('novaTarefa')
+      prop.saveEdit(novaTarefa)
+      console.log('prop',prop.edit)
+  }
 
   function feito(){
     setDone(prev => !prev)
   }
   
-  console.log(prop.edit)
   return (
     <>
     <div className='task'>
-      <p className={done ? 'done' : 'tarefa'} onClick={feito}>{ prop.edit ?
-      <form className='editForm'>
-         <input></input> <button onClick={prop.editarTarefa}>SALVAR</button> 
-         <button onClick={prop.cancelEdit}>x</button> 
-      </form>
-          : texto}</p>
+      <div className={done ? 'tarefa' : 'tarefa'} onClick={feito}>{ prop.edit ?
+        <form className='editForm' onSubmit={confirmarEdit}>
+          <input name='novaTarefa' type='text'/>
+          <button type='submit'>SALVAR</button> 
+          <button onClick={prop.cancelEdit} className='closeE'>x</button> 
+        </form>
+          : prop.tarefa}</div>
         <div className='icons'>
-          <img src={editIcon} alt='edit-icon' className='editicon' onClick={prop.editarTarefa}/>
-          <span  alt="trash-icon" onClick={prop.deletarTarefa} className='material-symbols-outlined lixo'>delete</span>
+          <span className='material-symbols-outlined editicon' onClick={prop.editarTarefa}> edit </span>
+          <span onClick={prop.deletarTarefa} className='material-symbols-outlined lixo'>delete</span>
         </div>
     </div>
     </>

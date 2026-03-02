@@ -22,6 +22,7 @@ input{
     width: 500px;
     font-size: 1.3rem;
     padding: 8px;
+    border: #312f2f solid 1px;
     border-radius: 5px;
 }
 
@@ -114,14 +115,21 @@ input{
 }
 /* EDIT TAREFA */
 .editForm{
+  height: 40px;
   display: flex;
   gap: 5px;
 }
-
+.closeE{
+  background-color: #c82d1f;
+}
+.closeE:hover{
+   background-color: #f14839;
+}
 .editForm button{
   display: flex;
   padding: 10px 10px;
   align-items: center;
+
 }
 .us{
   background-color: #ef6e1e;

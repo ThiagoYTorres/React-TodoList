@@ -6,8 +6,6 @@ function ListaTarefa() {
 
     const [tarefas, setTarefas] = React.useState([])
 
-    const [edit, setEdit] = React.useState(false)
-
     console.log(tarefas)
 
     function gerarTarefa(formData){
@@ -20,26 +18,36 @@ function ListaTarefa() {
                 {
                     texto: tarefa, 
                     id: prevTarefas.length + 1,
-                    isEditing: edit
-                
-                }])
+                    isEditing: false
+                }
+            ])
             )
             console.log(tarefas)
         }
     }
     
-    
+   function saveEdit(index, novoTexto){
+        setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? 
+        ({...e,
+            isEditing:!e.isEditing,
+            texto: novoTexto
+        }) : e
+            
+        ))
+        console.log(index, `Tarefa`)
+   }
 
     const lista = tarefas.map((el,index) => (
-        <Tarefa 
-            tarefa={el.texto} 
-            tarefas={tarefas}
-            key={index} 
-            edit={el.isEditing}
-            deletarTarefa={ () => delTarefa(index)}
-            editarTarefa={() => editTarefa(index)}
-            cancelEdit={() => cancelEdit(index)}
-        />
+            <Tarefa 
+                tarefa={el.texto} 
+                tarefas={tarefas}
+                key={index} 
+                saveEdit={(novoTexto) => saveEdit(index,novoTexto)}
+                edit={el.isEditing}
+                deletarTarefa={() => delTarefa(index)}
+                editarTarefa={() => editTarefa(index)}
+                cancelEdit={() => cancelEdit(index)}
+            />
         ))
 
     // Quando clicar em editar quero que apareça um input
