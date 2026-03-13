@@ -1,6 +1,6 @@
 import React from 'react'
 import Tarefa from './Tarefa'
-import EditTarefa from './EditTarefa'
+import { v4 as uuidv4 } from 'uuid'
 
 function ListaTarefa() {
 
@@ -17,7 +17,7 @@ function ListaTarefa() {
             setTarefas( prevTarefas => ([...prevTarefas,
                 {
                     texto: tarefa, 
-                    id: prevTarefas.length + 1,
+                    id: uuidv4(),
                     isEditing: false
                 }
             ])
@@ -26,11 +26,14 @@ function ListaTarefa() {
         }
     }
     
+
+
+    
    function saveEdit(index, novoTexto){
-        setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? 
+        setTarefas(prevTarefas => prevTarefas.map((e, i) => i === index ? 
         ({...e,
             isEditing:!e.isEditing,
-            texto: novoTexto
+            texto: novoTexto === '' ? e.texto : novoTexto
         }) : e
             
         ))
@@ -41,7 +44,7 @@ function ListaTarefa() {
             <Tarefa 
                 tarefa={el.texto} 
                 tarefas={tarefas}
-                key={index} 
+                key={el.id} 
                 saveEdit={(novoTexto) => saveEdit(index,novoTexto)}
                 edit={el.isEditing}
                 deletarTarefa={() => delTarefa(index)}
@@ -52,42 +55,45 @@ function ListaTarefa() {
 
     // Quando clicar em editar quero que apareça um input
     // Defina o valor daquela tarefa como o valor do input
+
+
     function delTarefa(index) {
         setTarefas(prevTarefas => prevTarefas.filter((e, i) => i !== index))
     }
 
     function editTarefa(index){
-        setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? ({...e,isEditing:!e.isEditing}) : 
-        e
+        setTarefas(prevTarefas => prevTarefas.map((e, i) => i === index ? 
+        ({...e,isEditing:!e.isEditing}) : e
     ))
         
     }
     function cancelEdit(index){
-         setTarefas(prevTarefas => prevTarefas.map((e, i) => i == index ? ({...e,isEditing:!e.isEditing}) : 
-        e
+         setTarefas(prevTarefas => prevTarefas.map((e, i) => i === index ? 
+         ({...e,isEditing:!e.isEditing}) : e
     ))
     }
     
   return (
     <>
-    <main>
-        <header className='header'>
-            <h1>To Do List</h1>
-            <p>Escreva uma tarefa e clique em ADD para adiciona-la na lista</p>
-        </header>
-    <form className='gerarT' action={gerarTarefa}>
-        <input 
-            name='tarefa' 
-            placeholder='Adicione uma tarefa' 
-            type='text'
-        />
-        <button>ADD</button>
-        
-    </form>
-        <ul className='lista-tarefas'>
-            {lista}
-        </ul>
-    </main>
+        <main>
+            <header className='header'>
+                <h1>To Do List</h1>
+                <p>Escreva uma tarefa e clique em ADD para adiciona-la na lista</p>
+            </header>
+        <form className='gerarT' action={gerarTarefa}>
+            <input 
+                name='tarefa' 
+                placeholder='Adicione uma tarefa' 
+                className='addTarefa'
+                type='text'
+            />
+            <button className='add'>ADD</button>
+            
+        </form>
+            <ul className='lista-tarefas'>
+                {lista}
+            </ul>
+        </main>
     </>
   )
 }
