@@ -8,16 +8,20 @@
     padding: 5px 30px;
     font-weight: 900;
     color: white;
-    background-color: rgb(4, 137, 226);
+    background-color: rgb(7, 86, 138);
     border: none;
     border-radius: 0 6px 6px 0;
     transition: 0.3s;
     cursor: pointer;
 }
 .add:hover{
-    background-color: rgb(115, 199, 255);
+    background-color: rgb(52, 145, 207);
 }
-
+.tarefa-inp{
+  z-index: 2;
+  display: flex;
+  position: relative;
+}
 .addTarefa{
     width: 500px;
     font-size: 1.3rem;
@@ -34,13 +38,27 @@
 
 .gerarT{
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 10px 0px 60px 0px;
+  align-items: center;
+  padding: 10px 0px 70px 0px;
   border-radius: 8px;
   width: 700px;
   margin: auto;
+  z-index: 2;
 }
-
+.warning{
+  position: absolute;
+  top: 270px;
+  color: rgb(242, 242, 242);
+  z-index: 1;
+  background-color: #f14839;
+  padding: 10px 10px 6px 15px;
+  width: 590px;
+  border-bottom-left-radius: 5px ;
+  border-bottom-right-radius: 5px;
+  animation: descida 0.3s ease-out forwards;
+}
 .header{
   display: flex;
   flex-direction: column;
@@ -61,15 +79,40 @@
 }
 
 /* TAREFA */
+.list{
+  background-color: #404040;
+  position: absolute;
+  font-size: 1.2rem;
+  top: -20px;
+  color: #e3e3e3;
+  border-radius: 5px;
+  padding: 5px 30px;
+}
 .lista-tarefas{
+  position: relative;
+  background-color: #f0f0f0;
+  border: solid 2px  #404040;
+  padding: 60px 0px 20px 0px;
+  border-radius: 5px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
+   box-shadow: 0px 2px 4px 0px #706e6e;;
+}
+.vazio{
+  font-size: 1.5rem;
+  color: #706e6e;
 }
 .tarefa {
   font-size: 1.2rem;
   color: rgb(43, 43, 43);
   
+}
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .task{
   display: flex;
@@ -81,7 +124,7 @@
   font-weight: 700;
   margin-bottom: 10px;
   border-radius: 5px;
-  box-shadow: 0px 2px 4px 0px #706e6e;;
+  box-shadow: 0px 2px 2px 0px #706e6e;;
   animation: descida 0.3s ease-out forwards;
 }
 .done {
@@ -145,7 +188,7 @@
   border-radius: 6px;
 }
 .save:hover{
-    background-color: rgb(115, 199, 255);
+    background-color: rgb(28, 173, 83);
 }
 
 
@@ -156,7 +199,7 @@
     font-weight: 700;
     font-size: 0.8rem;
     color: white;
-    background-color: rgb(4, 137, 226);
+    background-color:green;
     border: none;
     border-radius:6px;
     transition: 0.3s;

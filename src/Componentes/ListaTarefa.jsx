@@ -5,13 +5,14 @@ import { v4 as uuidv4 } from 'uuid'
 function ListaTarefa() {
 
     const [tarefas, setTarefas] = React.useState([])
+    const [eInput, setEinput] = React.useState(true)
 
     console.log(tarefas)
 
     function gerarTarefa(formData){
         const tarefa = formData.get('tarefa')
         if (tarefa == ''){
-            alert('[ATENÇÃO] input vazio adicione uma tarefa')
+            setEinput(false)
         }
         else{
             setTarefas( prevTarefas => ([...prevTarefas,
@@ -22,7 +23,7 @@ function ListaTarefa() {
                 }
             ])
             )
-            console.log(tarefas)
+            setEinput(true)
         }
     }
     
@@ -72,7 +73,7 @@ function ListaTarefa() {
          ({...e,isEditing:!e.isEditing}) : e
     ))
     }
-    
+    console.log(eInput)
   return (
     <>
         <main>
@@ -81,17 +82,25 @@ function ListaTarefa() {
                 <p>Escreva uma tarefa e clique em ADD para adiciona-la na lista</p>
             </header>
         <form className='gerarT' action={gerarTarefa}>
+            <div className='tarefa-inp'>
             <input 
-                name='tarefa' 
-                placeholder='Adicione uma tarefa' 
-                className='addTarefa'
-                type='text'
-            />
-            <button className='add'>ADD</button>
-            
+                    name='tarefa' 
+                    placeholder='Adicione uma tarefa' 
+                    className='addTarefa'
+                    type='text'
+                />
+                <button className='add'>ADD</button>
+            </div>
+            { eInput ? null : <div className='warning'>
+                <p>ERRO: Input vazio!</p>
+            </div>  }
         </form>
             <ul className='lista-tarefas'>
+                <h2 className='list'>Tarefas</h2>
+                <div>
                 {lista}
+            {tarefas.length == 0 ? <h1 className='vazio'>Sua lista de tarefas está vazia, adicione uma tarefa...</h1> : null}
+                </div>
             </ul>
         </main>
     </>
